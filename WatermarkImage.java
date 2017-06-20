@@ -65,8 +65,8 @@ public class WatermarkImage {
         	g.drawImage(overlay, w-60, h-60, null);
 
 
-        ImageIO.write(combined, "PNG", new File(file.path() + "\\" + file.filename()  + "_i." + file.extension()));
-        System.out.println("Success! File " + file.filename() + "_i." + file.extension() + " created.");
+        ImageIO.write(combined, "PNG", new File(file.path() + "\\" + file.filename()  + "_i.png"));
+        System.out.println("Success! File " + file.filename() + "_i.png" + " created.");
 
     } catch (IOException e) {
         e.printStackTrace();
