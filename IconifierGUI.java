@@ -32,10 +32,9 @@ public class IconifierGUI {
 	JRadioButton radioRGBW;
 	JRadioButton radioBlank;
 
-	JRadioButton topLeft;
-	JRadioButton topRight;
-	JRadioButton bottomLeft;
-	JRadioButton bottomRight;
+	JCheckBox walkover;
+	JCheckBox driveover;
+	JCheckBox adjustable;
 
 	JLabel previewIconLabel;
 	ImageIcon previewIcon;
@@ -64,34 +63,21 @@ public class IconifierGUI {
 		window.setIconImage(img);
 
 
-		//radioPanel
-		JPanel radioPanel = new JPanel();
+		//checkBoxPanel
+		JPanel checkBoxPanel = new JPanel();
 		RadioListener listener = new RadioListener();
 
-		topLeft = new JRadioButton();
-		topLeft.addActionListener(listener);
-		topRight = new JRadioButton();
-		topRight.addActionListener(listener);
-		bottomLeft = new JRadioButton();
-		bottomLeft.addActionListener(listener);
-		bottomRight = new JRadioButton();
-		bottomRight.addActionListener(listener);
+		walkover = new JCheckBox("Walkover.",false);
+		
+		driveover = new JCheckBox("Driveover.",false);
+		
+		adjustable = new JCheckBox("Adjustable.",false);
 
-		JLabel spaceLabel = new JLabel("Test");
-		radioPanel.setLayout(new GridLayout(2,2,50,50));
-		radioPanel.setBorder(BorderFactory.createTitledBorder("Icon Location"));
-		radioPanel.add(topLeft);
-		radioPanel.add(topRight);
-		radioPanel.add(bottomLeft);
-		radioPanel.add(bottomRight);
-
-		ButtonGroup group = new ButtonGroup();
-		group.add(topLeft);
-		group.add(topRight);
-		group.add(bottomLeft);
-		group.add(bottomRight);
-
-		bottomRight.setSelected(true);
+		checkBoxPanel.setLayout(new GridLayout(3,2,50,10));
+		checkBoxPanel.setBorder(BorderFactory.createTitledBorder("Additional Icons"));
+		checkBoxPanel.add(walkover);
+		checkBoxPanel.add(driveover);
+		checkBoxPanel.add(adjustable);
 
 		//iconPanel
 		JPanel iconPanel = new JPanel();
@@ -183,7 +169,6 @@ public class IconifierGUI {
 		//Preview Panel
 		previewPanel = new JPanel();
 
-
 		url = getClass().getResource("/res/Preview.png");
 
 		Image previewIconImg = kit.createImage(url);
@@ -231,15 +216,14 @@ public class IconifierGUI {
 					    e2.printStackTrace();
     				}
 
-					//location choice
-					if (topLeft.isSelected())
-					  	iconLocation = 0;
-					if (topRight.isSelected())
-					  	iconLocation = 1;
-					if (bottomLeft.isSelected())
-					  	iconLocation = 2;
-					if (bottomRight.isSelected())
-						iconLocation = 3;
+					//Additional Icons
+					//if (walkover.isSelected())
+					  	//iconLocation = 0;
+					//if (driveover.isSelected())
+					  	//iconLocation = 1;
+					//if (adjustable.isSelected())
+					  	//iconLocation = 2;
+					
 
 					//Auto-scale
 					boolean autoScale = false;
@@ -252,7 +236,7 @@ public class IconifierGUI {
 					File files[] = chooser.getSelectedFiles();
 					for(File file : files) {
 						filePath = ("" + file.getPath());
-				      	selection.addWatermark(filePath, icon, iconLocation, autoScale);
+				      	selection.addWatermark(filePath, icon, autoScale);
 					}
 				}
 				else {
@@ -280,7 +264,7 @@ public class IconifierGUI {
 		c.gridx = 0;
 		c.gridy = 0;
 		c.fill = GridBagConstraints.BOTH;
-		window.add(radioPanel, c);
+		window.add(checkBoxPanel, c);
 
 		c.gridx = 0;
 		c.gridy = 1;
@@ -336,14 +320,7 @@ public class IconifierGUI {
 		if (radioRGBW.isSelected())
 			type = "rgbw_";
 		//location choice
-		if (topLeft.isSelected())
-			loc = 2;
-		if (topRight.isSelected())
-			loc = 1;
-		if (bottomLeft.isSelected())
-			loc = 3;
-		if (bottomRight.isSelected())
-			loc = 0;
+		//loc = 2;
 
 		if(radioBlank.isSelected())
 			url = getClass().getResource("/res/Preview.png");
@@ -361,5 +338,6 @@ public class IconifierGUI {
 	        updatePreview();
 	    }
 	}
+	
 }
 

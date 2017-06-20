@@ -11,7 +11,7 @@ import java.net.*;
 
 public class WatermarkImage {
 
-  public static void addWatermark(String localImagePath, BufferedImage iconPath, int location, boolean autoScale) {
+  public static void addWatermark(String localImagePath, BufferedImage iconPath, boolean autoScale) {
 
     try {
         BufferedImage image = ImageIO.read(new File(localImagePath));
@@ -55,14 +55,10 @@ public class WatermarkImage {
         else
         	g.drawImage(image, 0, 0, null);
 
-        if(location == 0)
-        	g.drawImage(overlay, 10, 10, null);
-        if(location == 1)
-        	g.drawImage(overlay, w-60, 10, null);
-        if(location == 2)
-        	g.drawImage(overlay, 10, h-60, null);
-        if(location == 3)
-        	g.drawImage(overlay, w-60, h-60, null);
+		// Draw LED icon to bottom right.
+        g.drawImage(overlay, w-60, h-60, null);
+		
+		// Draw other icons 17px out
 
 
         ImageIO.write(combined, "PNG", new File(file.path() + "\\" + file.filename()  + "_i.png"));
