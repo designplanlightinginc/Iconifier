@@ -11,11 +11,15 @@ import java.net.*;
 
 public class WatermarkImage {
 
-  public static void addWatermark(String localImagePath, BufferedImage iconPath, boolean autoScale) {
+  public static void addWatermark(String localImagePath, BufferedImage iconPath, boolean[] additionalIcons, boolean autoScale) {
 
     try {
         BufferedImage image = ImageIO.read(new File(localImagePath));
 		BufferedImage overlay = iconPath;
+
+		BufferedImage walkover = ImageIO.read(IconifierGUI.class.getResourceAsStream("/res/icon_walkover.png"));
+		BufferedImage driveover = ImageIO.read(IconifierGUI.class.getResourceAsStream("/res/icon_driveover.png"));
+		BufferedImage adjustable = ImageIO.read(IconifierGUI.class.getResourceAsStream("/res/icon_adjustable.png"));
 
         Filename file = new Filename(localImagePath, '\\', '.');
 
@@ -59,7 +63,18 @@ public class WatermarkImage {
         g.drawImage(overlay, w-60, h-60, null);
 		
 		// Draw other icons 17px out
-
+		if(additionalIcons[0]|| additionalIcons[1]) {
+			if(additionalIcons[0])
+				g.drawImage(walkover, 17, h-53, null);
+			if(additionalIcons[1])
+				g.drawImage(driveover, 17, h-53, null);
+			if(additionalIcons[2])
+				g.drawImage(adjustable, 70, h-50, null);
+		}
+		else {
+			if(additionalIcons[2])
+				g.drawImage(adjustable, 17, h-50, null);
+		}
 
         ImageIO.write(combined, "PNG", new File(file.path() + "\\" + file.filename()  + "_i.png"));
         System.out.println("Success! File " + file.filename() + "_i.png" + " created.");

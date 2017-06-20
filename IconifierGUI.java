@@ -196,6 +196,7 @@ public class IconifierGUI {
 
 				    String iconPath = "";
 				    int iconLocation = 0;
+					boolean[] additionalIcons = new boolean[3];
 				    //icon choice
 
 					if (radioWhite.isSelected())
@@ -217,12 +218,13 @@ public class IconifierGUI {
     				}
 
 					//Additional Icons
-					//if (walkover.isSelected())
-					  	//iconLocation = 0;
-					//if (driveover.isSelected())
-					  	//iconLocation = 1;
-					//if (adjustable.isSelected())
-					  	//iconLocation = 2;
+					if (walkover.isSelected())
+					  	additionalIcons[0] = true;
+					if (driveover.isSelected())
+					  	additionalIcons[1] = true;
+					if (adjustable.isSelected())
+					  	additionalIcons[2] = true;
+					
 					
 
 					//Auto-scale
@@ -236,7 +238,7 @@ public class IconifierGUI {
 					File files[] = chooser.getSelectedFiles();
 					for(File file : files) {
 						filePath = ("" + file.getPath());
-				      	selection.addWatermark(filePath, icon, autoScale);
+				      	selection.addWatermark(filePath, icon, additionalIcons, autoScale);
 					}
 				}
 				else {
@@ -319,8 +321,6 @@ public class IconifierGUI {
 			type = "rgb_";
 		if (radioRGBW.isSelected())
 			type = "rgbw_";
-		//location choice
-		//loc = 2;
 
 		if(radioBlank.isSelected())
 			url = getClass().getResource("/res/Preview.png");
