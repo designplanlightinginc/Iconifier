@@ -52,7 +52,7 @@ public class IconifierGUI {
 		chooser.setDialogTitle("Select Image");
 		chooser.setMultiSelectionEnabled(true);
 
-		window = new JFrame("LED Iconifier");
+		window = new JFrame("LED Iconifier v1.1");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -292,9 +292,7 @@ public class IconifierGUI {
 		radioWhite.requestFocusInWindow(); 
 		window.setVisible(true);
 		
-		//window.getRootPane().setDefaultButton(radioWhite);
-		//radioWhite.requestFocus();
-		
+
 	}
 	public static void main(String[] args) {
 		try {
