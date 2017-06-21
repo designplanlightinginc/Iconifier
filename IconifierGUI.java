@@ -66,14 +66,18 @@ public class IconifierGUI {
 		//checkBoxPanel
 		JPanel checkBoxPanel = new JPanel();
 		RadioListener listener = new RadioListener();
+		CheckListener checkListener = new CheckListener();
 
 		walkover = new JCheckBox("Walkover.",false);
+		walkover.addActionListener(checkListener);
 		
 		driveover = new JCheckBox("Driveover.",false);
+		driveover.addActionListener(checkListener);
 		
 		adjustable = new JCheckBox("Adjustable.",false);
+		adjustable.addActionListener(checkListener);
 
-		checkBoxPanel.setLayout(new GridLayout(3,2,50,10));
+		checkBoxPanel.setLayout(new GridLayout(3,2,50,4));
 		checkBoxPanel.setBorder(BorderFactory.createTitledBorder("Additional Icons"));
 		checkBoxPanel.add(walkover);
 		checkBoxPanel.add(driveover);
@@ -181,8 +185,8 @@ public class IconifierGUI {
 		//Directory Panel
 		JPanel directoryPanel = new JPanel();
 		JLabel directoryLabel0 = new JLabel("Select a file to be iconified!");
-		JLabel directoryLabel = new JLabel("Use this after you have chosen your icon type & location.");
-		JLabel directoryLabel2 = new JLabel("The file will be saved as '<file_name>_i.jpg'.");
+		JLabel directoryLabel = new JLabel("Use this after you have chosen your desired icons.");
+		JLabel directoryLabel2 = new JLabel("The file will be saved as '<file_name>_i.png'.");
 
 		JCheckBox directoryBox = new JCheckBox("Auto-scale image.",false);
 
@@ -285,7 +289,12 @@ public class IconifierGUI {
 
 		updatePreview();
 		window.pack();
+		radioWhite.requestFocusInWindow(); 
 		window.setVisible(true);
+		
+		//window.getRootPane().setDefaultButton(radioWhite);
+		//radioWhite.requestFocus();
+		
 	}
 	public static void main(String[] args) {
 		try {
@@ -309,32 +318,63 @@ public class IconifierGUI {
 	}
 
 	public void updatePreview() {
-		String type = "";
-		int loc = 0;
-		//String result = "";
-		//icon choice
-		if (radioWhite.isSelected())
-			type = "white_";
-		if (radioGray.isSelected())
-			type = "gray_";
-		if (radioRGB.isSelected())
-			type = "rgb_";
-		if (radioRGBW.isSelected())
-			type = "rgbw_";
-
-		if(radioBlank.isSelected())
-			url = getClass().getResource("/res/Preview.png");
-		else
-			url = getClass().getResource("/res/previews/"+type+"preview_"+loc+".png");
-
-		Image result = kit.createImage(url);
-		previewIcon = new ImageIcon(result, "Image Preview");
-		previewIconLabel.setIcon(previewIcon);
+		
+		try {
+			BufferedImage newPreview = ImageIO.read(IconifierGUI.class.getResourceAsStream("/res/Preview.png"));
+			BufferedImage whitePreview = ImageIO.read(IconifierGUI.class.getResourceAsStream("/res/LED STATIC2.png"));
+			BufferedImage grayPreview = ImageIO.read(IconifierGUI.class.getResourceAsStream("/res/LED STATIC1.png"));
+			BufferedImage rgbPreview = ImageIO.read(IconifierGUI.class.getResourceAsStream("/res/LED RGB.png"));
+			BufferedImage rgbwPreview = ImageIO.read(IconifierGUI.class.getResourceAsStream("/res/LED RGBW.png"));
+			BufferedImage walkoverPreview = ImageIO.read(IconifierGUI.class.getResourceAsStream("/res/icon_walkover.png"));
+			BufferedImage driveoverPreview = ImageIO.read(IconifierGUI.class.getResourceAsStream("/res/icon_driveover.png"));
+			BufferedImage adjustablePreview = ImageIO.read(IconifierGUI.class.getResourceAsStream("/res/icon_adjustable.png"));
+			
+			BufferedImage fullPreview = new BufferedImage(388, 388, BufferedImage.TYPE_INT_ARGB);
+			Graphics g = fullPreview.getGraphics();
+			
+			g.drawImage(newPreview, 0, 0, null);
+			int w = 388;
+			int h = 388;
+			
+			if (radioWhite.isSelected())
+				g.drawImage(whitePreview, w-60, h-60, null);
+			if (radioGray.isSelected())
+				g.drawImage(grayPreview, w-60, h-60, null);
+			if (radioRGB.isSelected())
+				g.drawImage(rgbPreview, w-60, h-60, null);
+			if (radioRGBW.isSelected())
+				g.drawImage(rgbwPreview, w-60, h-60, null);
+			
+			if(driveover.isSelected() || walkover.isSelected()) {
+				if(walkover.isSelected())
+					g.drawImage(walkoverPreview, 17, h-53, null);
+				if(driveover.isSelected())
+					g.drawImage(driveoverPreview, 17, h-53, null);
+				if(adjustable.isSelected())
+					g.drawImage(adjustablePreview, 70, h-52, null);
+			}
+			else {
+				if(adjustable.isSelected())
+					g.drawImage(adjustablePreview, 17, h-52, null);
+			}
+			
+			previewIcon = new ImageIcon(fullPreview, "Image Preview");
+			previewIconLabel.setIcon(previewIcon);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private class RadioListener implements ActionListener{
 	    public void actionPerformed(ActionEvent e){
 	        JRadioButton button = (JRadioButton) e.getSource();
+	        updatePreview();
+	    }
+	}
+	
+	private class CheckListener implements ActionListener{
+	    public void actionPerformed(ActionEvent e){
+	        JCheckBox checkbox = (JCheckBox) e.getSource();
 	        updatePreview();
 	    }
 	}

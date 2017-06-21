@@ -63,17 +63,17 @@ public class WatermarkImage {
         g.drawImage(overlay, w-60, h-60, null);
 		
 		// Draw other icons 17px out
-		if(additionalIcons[0]|| additionalIcons[1]) {
+		if(additionalIcons[0] || additionalIcons[1]) {
 			if(additionalIcons[0])
 				g.drawImage(walkover, 17, h-53, null);
 			if(additionalIcons[1])
 				g.drawImage(driveover, 17, h-53, null);
 			if(additionalIcons[2])
-				g.drawImage(adjustable, 70, h-50, null);
+				g.drawImage(adjustable, 70, h-52, null);
 		}
 		else {
 			if(additionalIcons[2])
-				g.drawImage(adjustable, 17, h-50, null);
+				g.drawImage(adjustable, 17, h-52, null);
 		}
 
         ImageIO.write(combined, "PNG", new File(file.path() + "\\" + file.filename()  + "_i.png"));
